@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import guru.assignment.recipe.domain.Category;
 import guru.assignment.recipe.domain.Difficulty;
@@ -18,7 +19,9 @@ import guru.assignment.recipe.domain.UnitOfMeasure;
 import guru.assignment.recipe.repositories.CategoryRepository;
 import guru.assignment.recipe.repositories.RecipeRepository;
 import guru.assignment.recipe.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class RecipeBoostrap implements ApplicationListener<ContextRefreshedEvent>{
 
@@ -34,9 +37,11 @@ public class RecipeBoostrap implements ApplicationListener<ContextRefreshedEvent
 	}
 	
 	@Override
+	@Transactional
 	public void onApplicationEvent(ContextRefreshedEvent event) {
+		log.debug("Saving Recipes");
 		recipeRepository.saveAll(getRecipe());
-		
+		log.debug("Saved");
 	}
 	
 	private List<Recipe> getRecipe(){
@@ -148,6 +153,7 @@ public class RecipeBoostrap implements ApplicationListener<ContextRefreshedEvent
 		guacamoleRecipe.getCategories().add(mexicanCategory);
 		
 		//add to return list
+		log.debug("adding Guacamole on recipe list");
 		recipes.add(guacamoleRecipe);
 		
 		//YummyTacos
@@ -205,6 +211,7 @@ public class RecipeBoostrap implements ApplicationListener<ContextRefreshedEvent
         tacosRecipe.getCategories().add(americanCategory);
         tacosRecipe.getCategories().add(mexicanCategory);
         
+        log.debug("adding Guacamole on recipe list");
         recipes.add(tacosRecipe);
         return recipes;
 	}

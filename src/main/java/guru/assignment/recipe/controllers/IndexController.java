@@ -5,8 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import guru.assignment.recipe.service.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 public class IndexController {
 
 	private final RecipeService recipeService;
@@ -18,7 +20,7 @@ public class IndexController {
 
 	@RequestMapping({"", "/", "/index"})
 	public String getIndexPage(Model model) {
-		
+		log.debug("Entering at IndexPage controller");
 		model.addAttribute("recipes", recipeService.getRecipe());
 		
 		return "index";
