@@ -77,5 +77,20 @@ public class RecipeServiceImplTest {
 //		testa se o findAll é chamado apenas 1 vez, não 2 ou 0, mas 1.
 		verify(recipeRepository, times(1)).findAll();
 	}
+	
+	@Test
+	public void testDeleteById() throws Exception{
+		
+		//given
+		Long idToDelete = Long.valueOf(2L);
+		
+		//when
+		recipeService.deleteById(idToDelete);
+		
+		//no 'when', since method has void return type
+		
+		//then
+		verify(recipeRepository, times(1)).deleteById(anyLong());
+	}
 
 }
