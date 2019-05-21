@@ -1,5 +1,6 @@
 package guru.assignment.recipe.service;
 
+import static org.hamcrest.CoreMatchers.any;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -70,6 +71,7 @@ public class RecipeServiceImplTest {
 		
 		Recipe recipeReturned = recipeService.findById(1L);
 	}
+	
 	
 	@Test
 	public void testGetRecipe() throws Exception{

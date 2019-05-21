@@ -67,13 +67,30 @@ public class RecipeController {
 	
 	@ResponseStatus(HttpStatus.NOT_FOUND) //utilizado porque em teste vimos que o método é pego em precedencia com o status 200 e não 404 como deve ser.
 	@ExceptionHandler(NotFoundException.class)
-	public ModelAndView handleNotFound() {
+	public ModelAndView handleNotFound(Exception exception) {
 		
 		log.error("Handling not found exception");
+		log.error(exception.getMessage());
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
 		modelAndView.setViewName("404error");
+		modelAndView.addObject("exception", exception);
+		
+		return modelAndView;
+	}
+	
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(NumberFormatException.class)
+	public ModelAndView handleNumberFormatError(Exception exception) {
+		
+		log.error("Handling number format error");
+		log.error(exception.getMessage());
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		modelAndView.setViewName("400error");
+		modelAndView.addObject("exception", exception);
 		
 		return modelAndView;
 	}
