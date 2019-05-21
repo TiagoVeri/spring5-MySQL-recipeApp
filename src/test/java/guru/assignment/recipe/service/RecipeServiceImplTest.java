@@ -20,6 +20,7 @@ import org.mockito.MockitoAnnotations;
 import guru.assignment.recipe.converters.RecipeCommandToRecipe;
 import guru.assignment.recipe.converters.RecipeToRecipeCommand;
 import guru.assignment.recipe.domain.Recipe;
+import guru.assignment.recipe.exceptions.NotFoundException;
 import guru.assignment.recipe.repositories.RecipeRepository;
 
 public class RecipeServiceImplTest {
@@ -58,6 +59,16 @@ public class RecipeServiceImplTest {
 		verify(recipeRepository, never()).findAll();
 		
 
+	}
+	
+	@Test(expected = NotFoundException.class)
+	public void getRecipeByIdTestNotFound() throws Exception{
+	
+		Optional<Recipe> recipeOptional = Optional.empty();
+		
+		when (recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+		
+		Recipe recipeReturned = recipeService.findById(1L);
 	}
 	
 	@Test

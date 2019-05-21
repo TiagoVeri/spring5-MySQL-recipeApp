@@ -1,14 +1,19 @@
 package guru.assignment.recipe.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 import guru.assignment.recipe.commands.RecipeCommand;
+import guru.assignment.recipe.exceptions.NotFoundException;
 import guru.assignment.recipe.service.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -58,6 +63,19 @@ public class RecipeController {
 		recipeService.deleteById(Long.valueOf(id));
 		
 		return "redirect:/";
+	}
+	
+	@ResponseStatus(HttpStatus.NOT_FOUND) //utilizado porque em teste vimos que o método é pego em precedencia com o status 200 e não 404 como deve ser.
+	@ExceptionHandler(NotFoundException.class)
+	public ModelAndView handleNotFound() {
+		
+		log.error("Handling not found exception");
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		modelAndView.setViewName("404error");
+		
+		return modelAndView;
 	}
 
 }
