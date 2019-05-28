@@ -42,8 +42,8 @@ public class UnitOfMeasureServiceImpTest {
 		unitOfMeasures.add(uom1);
 		
 		UnitOfMeasure uom2 = new UnitOfMeasure();
-		uom1.setId(2L);
-		unitOfMeasures.add(uom1);
+		uom2.setId(2L);
+		unitOfMeasures.add(uom2);
 		
 		when(unitOfMeasureRepository.findAll()).thenReturn(unitOfMeasures);
 		
